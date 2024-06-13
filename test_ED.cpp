@@ -30,7 +30,7 @@ int main(int argc, char** argv)
         vector<Vec6d> ellipses;
         vector<Vec4f> lines;
 
-        //Detection of edge segments from an input image    
+        //Detection of edge segments from an input image
         tm.start();
         //Call ED constructor
         ED testED = ED(testImg, SOBEL_OPERATOR, 36, 8, 1, 10, 1.0, true);
@@ -76,8 +76,8 @@ int main(int argc, char** argv)
 
         Mat lineImg1 = Mat(lineImg0.rows, lineImg0.cols, CV_8UC1, Scalar(255));
 
-        for (int i = 0; i < lines.size(); i++)
-            line(lineImg1, Point2d(lines[i][0], lines[i][1]), Point2d(lines[i][2], lines[i][3]), Scalar(0), 1, LINE_AA);
+        for (int j = 0; j < lines.size(); j++)
+            line(lineImg1, Point2d(lines[j][0], lines[j][1]), Point2d(lines[j][2], lines[j][3]), Scalar(0), 1, LINE_AA);
 
         absdiff(lineImg0, lineImg1, diff);
         cout << "different pixel count              : " << countNonZero(diff) << endl;
@@ -105,32 +105,32 @@ int main(int argc, char** argv)
         Mat ellipsImg0 = Mat(lineImg0.rows, lineImg0.cols, CV_8UC3, Scalar::all(0));
         Mat ellipsImg1 = Mat(lineImg0.rows, lineImg0.cols, CV_8UC3, Scalar::all(0));
 
-        for (int i = 0; i < found_circles.size(); i++)
+        for (int j = 0; j < found_circles.size(); j++)
         {
-            Point center((int)found_circles[i].center.x, (int)found_circles[i].center.y);
-            Size axes((int)found_circles[i].r, (int)found_circles[i].r);
+            Point center((int)found_circles[j].center.x, (int)found_circles[j].center.y);
+            Size axes((int)found_circles[j].r, (int)found_circles[j].r);
             double angle(0.0);
             Scalar color = Scalar(0, 255, 0);
 
             ellipse(ellipsImg0, center, axes, angle, 0, 360, color, 1, LINE_AA);
         }
 
-        for (int i = 0; i < found_ellipses.size(); i++)
+        for (int j = 0; j < found_ellipses.size(); j++)
         {
-            Point center((int)found_ellipses[i].center.x, (int)found_ellipses[i].center.y);
-            Size axes((int)found_ellipses[i].axes.width, (int)found_ellipses[i].axes.height);
-            double angle = found_ellipses[i].theta * 180 / CV_PI;
+            Point center((int)found_ellipses[j].center.x, (int)found_ellipses[j].center.y);
+            Size axes((int)found_ellipses[j].axes.width, (int)found_ellipses[j].axes.height);
+            double angle = found_ellipses[j].theta * 180 / CV_PI;
             Scalar color = Scalar(255, 255, 0);
 
             ellipse(ellipsImg0, center, axes, angle, 0, 360, color, 1, LINE_AA);
         }
 
-        for (size_t i = 0; i < ellipses.size(); i++)
+        for (size_t j = 0; j < ellipses.size(); j++)
         {
-            Point center((int)ellipses[i][0], (int)ellipses[i][1]);
-            Size axes((int)ellipses[i][2] + (int)ellipses[i][3], (int)ellipses[i][2] + (int)ellipses[i][4]);
-            double angle(ellipses[i][5]);
-            Scalar color = ellipses[i][2] == 0 ? Scalar(255, 255, 0) : Scalar(0, 255, 0);
+            Point center((int)ellipses[j][0], (int)ellipses[j][1]);
+            Size axes((int)ellipses[j][2] + (int)ellipses[j][3], (int)ellipses[j][2] + (int)ellipses[j][4]);
+            double angle(ellipses[j][5]);
+            Scalar color = ellipses[j][2] == 0 ? Scalar(255, 255, 0) : Scalar(0, 255, 0);
 
             ellipse(ellipsImg1, center, axes, angle, 0, 360, color, 1, LINE_AA);
         }
